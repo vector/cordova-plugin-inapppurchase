@@ -61,7 +61,8 @@ public class InAppBillingV3 extends CordovaPlugin {
   private JSONObject manifestObject = null;
 
   private JSONObject getManifestContents() {
-    if (manifestObject != null) return manifestObject;
+    if (manifestObject != null)
+      return manifestObject;
 
     Context context = this.cordova.getActivity();
     InputStream is;
@@ -140,7 +141,7 @@ public class InAppBillingV3 extends CordovaPlugin {
     JSONObject error = new JSONObject();
     try {
       if (resultCode != null) {
-        error.put("code", (int)resultCode);
+        error.put("code", (int) resultCode);
       }
       if (message != null) {
         error.put("message", message);
@@ -151,7 +152,8 @@ public class InAppBillingV3 extends CordovaPlugin {
       if (response != null) {
         error.put("response", response);
       }
-    } catch (JSONException e) {}
+    } catch (JSONException e) {
+    }
     return error;
   }
 
@@ -184,7 +186,8 @@ public class InAppBillingV3 extends CordovaPlugin {
       iabHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
         public void onIabSetupFinished(IabResult result) {
           if (!result.isSuccess()) {
-            callbackContext.error(makeError("Unable to initialize billing: " + result.toString(), UNABLE_TO_INITIALIZE, result));
+            callbackContext
+                .error(makeError("Unable to initialize billing: " + result.toString(), UNABLE_TO_INITIALIZE, result));
           } else {
             Log.d(TAG, "Billing initialized");
             billingInitialized = true;
@@ -246,7 +249,7 @@ public class InAppBillingV3 extends CordovaPlugin {
         }
       }
     };
-    if(subscribe){
+    if (subscribe) {
       iabHelper.launchSubscriptionPurchaseFlow(cordovaActivity, sku, newOrder, oipfl, "");
     } else {
       iabHelper.launchPurchaseFlow(cordovaActivity, sku, newOrder, oipfl, "");
@@ -323,6 +326,7 @@ public class InAppBillingV3 extends CordovaPlugin {
     }
     iabHelper.queryInventoryAsync(true, moreSkus, new IabHelper.QueryInventoryFinishedListener() {
       public void onQueryInventoryFinished(IabResult result, Inventory inventory) {
+        Log.d(TAG, result.toString());
         if (result.isFailure()) {
           callbackContext.error("Error retrieving SKU details");
           return;
@@ -341,6 +345,9 @@ public class InAppBillingV3 extends CordovaPlugin {
               detailsJson.put("type", skuDetails.getType());
               detailsJson.put("currency", skuDetails.getPriceCurrency());
               response.put(detailsJson);
+              Log.d(Tag, "found sku:" + detailsJson.toString());
+            } else {
+              Log.d(TAG, "missing sku:" + sku);
             }
           }
         } catch (JSONException e) {
@@ -396,10 +403,10 @@ public class InAppBillingV3 extends CordovaPlugin {
     }
   }
 
-
   @Override
   public void onDestroy() {
-    if (iabHelper != null) iabHelper.dispose();
+    if (iabHelper != null)
+      iabHelper.dispose();
     iabHelper = null;
     billingInitialized = false;
   }

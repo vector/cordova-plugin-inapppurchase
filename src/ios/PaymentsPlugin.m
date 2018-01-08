@@ -38,7 +38,7 @@
         [numberFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
         [numberFormatter setLocale:product.priceLocale];
         NSString *currencyCode = [numberFormatter currencyCode];
-        
+
         [validProducts addObject:@{
                                  @"productId": NILABLE(product.productIdentifier),
                                  @"title": NILABLE(product.localizedTitle),
@@ -107,6 +107,7 @@
                                  @"productId": NILABLE(transaction.payment.productIdentifier),
                                  @"date": NILABLE(transactionDateString),
                                  @"transactionId": NILABLE(transaction.transactionIdentifier),
+                                 @"originalTransactionId": NILABLE(transaction.originalTransaction.transactionIdentifier),
                                  @"transactionState": NILABLE([NSNumber numberWithInteger:transaction.transactionState])
                                  }];
     }

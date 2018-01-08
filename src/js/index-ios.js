@@ -21,7 +21,7 @@ const nativeCall = (name, args = []) => {
 
 inAppPurchase.getProducts = (productIds) => {
   return new Promise((resolve, reject) => {
-    if(!inAppPurchase.utils.validArrayOfStrings(productIds)) {
+    if (!inAppPurchase.utils.validArrayOfStrings(productIds)) {
       reject(new Error(inAppPurchase.utils.errors[101]));
     } else {
       return nativeCall('getProducts', [productIds]).then((res) => {
@@ -30,12 +30,12 @@ inAppPurchase.getProducts = (productIds) => {
         } else {
           const arr = res.products.map((val) => {
             return {
-              productId   : val.productId,
-              title       : val.title,
-              description : val.description,
-              priceAsDecimal : val.priceAsDecimal,
-              price       : val.price,
-              currency    : val.currency,
+              productId: val.productId,
+              title: val.title,
+              description: val.description,
+              priceAsDecimal: val.priceAsDecimal,
+              price: val.price,
+              currency: val.currency,
             };
           });
           resolve(arr);
@@ -47,13 +47,13 @@ inAppPurchase.getProducts = (productIds) => {
 
 inAppPurchase.buy = (productId) => {
   return new Promise((resolve, reject) => {
-    if(!inAppPurchase.utils.validString(productId)) {
+    if (!inAppPurchase.utils.validString(productId)) {
       reject(new Error(inAppPurchase.utils.errors[102]));
     } else {
       nativeCall('buy', [productId]).then((res) => {
         resolve({
-          transactionId : res.transactionId,
-          receipt       : res.receipt,
+          transactionId: res.transactionId,
+          receipt: res.receipt,
         });
       }).catch(reject);
     }
@@ -94,10 +94,11 @@ inAppPurchase.restorePurchases = () => {
     if (res && res.transactions) {
       arr = res.transactions.map((val) => {
         return {
-          productId     : val.productId,
-          date          : val.date,
-          transactionId : val.transactionId,
-          state         : val.transactionState,
+          productId: val.productId,
+          date: val.date,
+          transactionId: val.transactionId,
+          state: val.transactionState,
+          originalTransactionId: val.originalTransactionId
         };
       });
     }
