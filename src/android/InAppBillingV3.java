@@ -345,7 +345,7 @@ public class InAppBillingV3 extends CordovaPlugin {
               detailsJson.put("type", skuDetails.getType());
               detailsJson.put("currency", skuDetails.getPriceCurrency());
               response.put(detailsJson);
-              Log.d(Tag, "found sku:" + detailsJson.toString());
+              Log.d(TAG, "found sku:" + detailsJson.toString());
             } else {
               Log.d(TAG, "missing sku:" + sku);
             }
